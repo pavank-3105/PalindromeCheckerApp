@@ -1,37 +1,50 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        System.out.println("===== Palindrome Checker App (UC5: Stack Based) =====");
         System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        String str = sc.nextLine();
 
+        // Convert to lowercase
+        str = str.toLowerCase();
+
+        // Create Queue and Stack
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+        // Enqueue and Push characters
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            queue.add(ch);   // Enqueue
+            stack.push(ch);  // Push
         }
 
         boolean isPalindrome = true;
 
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) != stack.pop()) {
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
+
+            char qChar = queue.remove(); // Dequeue
+            char sChar = stack.pop();    // Pop
+
+            if (qChar != sChar) {
                 isPalindrome = false;
                 break;
             }
         }
 
+        // Result
         if (isPalindrome) {
-            System.out.println("Result: The given string is a Palindrome.");
+            System.out.println("Palindrome");
         } else {
-            System.out.println("Result: The given string is NOT a Palindrome.");
+            System.out.println("Not Palindrome");
         }
 
-        scanner.close();
+        sc.close();
     }
 }
